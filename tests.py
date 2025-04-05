@@ -87,3 +87,21 @@ def test_choice_text_preserved():
     q = Question('q')
     c = q.add_choice('Option A')
     assert c.text == 'Option A'
+
+@pytest.fixture
+def empty_question():
+    return Question(title="Empty Question", points=2)
+
+def test_empty_question_has_no_choices(empty_question):
+    assert empty_question.choices == []
+
+@pytest.fixture
+def question_with_choices():
+    q = Question(title="Sample question", points=5, max_selections=2)
+    q.add_choice("Option A", is_correct=True)
+    q.add_choice("Option B", is_correct=False)
+    q.add_choice("Option C", is_correct=True)
+    return q
+
+def test_question_has_correct_number_of_choices(question_with_choices):
+    assert len(question_with_choices.choices) == 3
